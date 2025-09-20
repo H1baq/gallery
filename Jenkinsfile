@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/h1baq/https://github.com/H1baq/gallerygit'
+                git branch: 'master, url: 'https://github.com/h1baq/gallery.git'
             }
         }
 
