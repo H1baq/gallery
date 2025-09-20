@@ -1,8 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker { image 'node:18' }  // Run inside official Node.js 18 container
+    }
 
     triggers {
-        pollSCM('H/5 * * * *')
+        pollSCM('H/5 * * * *')  // Check GitHub every 5 mins
     }
 
     stages {
