@@ -1,16 +1,26 @@
 pipeline {
-    agent {
-        docker { image 'node:18' }  // Run inside official Node.js 18 container
-    }
+    agent any
 
     triggers {
-        pollSCM('H/5 * * * *')  // Check GitHub every 5 mins
+        pollSCM('H/5 * * * *')
     }
 
     stages {
         stage('Checkout') {
             steps {
                 git branch: 'master', url: 'https://github.com/h1baq/gallery.git'
+            }
+        }
+
+        stage('Install Node.js') {
+            steps {
+                sh '''
+                  # Install Node.js if not already installed
+                  curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+                  apt-get install -y nodejs
+                  node -v
+                  npm -v
+                '''
             }
         }
 
