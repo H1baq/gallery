@@ -2,8 +2,7 @@ pipeline {
     agent any
 
     tools {
-        // Name must match the one you set in "Manage Jenkins → Tools → NodeJS installations"
-        nodejs 'node18'
+        nodejs 'node24'
     }
 
     triggers {
