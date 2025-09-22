@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'node:18'    // Uses Node.js 18 Docker image
+            args '-p 3000:3000'
+        }
+    }
 
     triggers {
         pollSCM('H/5 * * * *')
@@ -9,18 +14,6 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'master', url: 'https://github.com/h1baq/gallery.git'
-            }
-        }
-
-        stage('Install Node.js') {
-            steps {
-                sh '''
-                  # Install Node.js if not already installed
-                  curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
-                  apt-get install -y nodejs
-                  node -v
-                  npm -v
-                '''
             }
         }
 
