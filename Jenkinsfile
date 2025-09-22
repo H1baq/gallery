@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    tools {
+        // Name must match the one you set in "Manage Jenkins → Tools → NodeJS installations"
+        nodejs 'node18'
+    }
+
     triggers {
         pollSCM('H/5 * * * *')
     }
@@ -9,18 +14,6 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'master', url: 'https://github.com/h1baq/gallery.git'
-            }
-        }
-
-        stage('Install Node.js') {
-            steps {
-                sh '''
-                  echo "Installing Node.js..."
-                  curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-                  sudo apt-get install -y nodejs
-                  node -v
-                  npm -v
-                '''
             }
         }
 
@@ -39,6 +32,8 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'No tests found, skipping...'
+                // if you add tests later, replace with:
+                // sh 'npm test'
             }
         }
 
