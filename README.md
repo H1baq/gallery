@@ -63,6 +63,3 @@ The test suite ensures backend functionality works as expected.
 * Hibaq Adan
 * [hibaqku7@gmail.com]
 
-
-Do you want me to add that?
-```
