@@ -1,6 +1,6 @@
 
 
-# 📸 Gallery App
+# 📸 Gallery
 
 A simple image gallery web application built with Node.js, Express, and EJS. This project allows users to view and manage image collections through a clean and responsive interface.
 
