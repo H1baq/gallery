@@ -5,6 +5,11 @@ pipeline {
         nodejs 'Node24'
     }
 
+    environment {
+        RENDER_URL = "https://your-render-app.onrender.com"
+        SLACK_CHANNEL = '#Hibaq_IP1'
+    }
+
     triggers {
         pollSCM('H/5 * * * *')
     }
@@ -30,7 +35,6 @@ pipeline {
 
         stage('Test') {
             steps {
-                echo 'Running tests...'
                 sh 'npm test'
             }
         }
@@ -43,16 +47,17 @@ pipeline {
     }
 
     post {
+        success {
+            slackSend (
+                channel: "${env.SLACK_CHANNEL}",
+                message: "✅ Build #${env.BUILD_NUMBER} succeeded! 🎉 Deployed to ${env.RENDER_URL}"
+            )
+        }
         failure {
-            mail to: 'hibaqku7@gmail.com',
-                 subject: "❌ Jenkins Pipeline Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                 body: """Hello,
-
-The Jenkins pipeline for job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' has failed.
-Check the console output here: ${env.BUILD_URL}
-
-- Jenkins
-"""
+            slackSend (
+                channel: "${env.SLACK_CHANNEL}",
+                message: "❌ Build #${env.BUILD_NUMBER} failed. Please check Jenkins logs."
+            )
         }
     }
 }
