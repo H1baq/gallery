@@ -7,7 +7,7 @@ pipeline {
 
     environment {
         RENDER_URL = "https://gallery-809l.onrender.com/"
-        SLACK_CHANNEL = '#Hibaq_iP1'
+        SLACK_CHANNEL = '#hibaq_iP1'
     }
 
     triggers {
