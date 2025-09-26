@@ -30,9 +30,8 @@ pipeline {
 
         stage('Test') {
             steps {
-                echo 'No tests found, skipping...'
-                // if you add tests later, replace with:
-                // sh 'npm test'
+                echo 'Running tests...'
+                sh 'npm test'
             }
         }
 
@@ -40,6 +39,20 @@ pipeline {
             steps {
                 echo 'Deployment triggered by pushing code to GitHub (Render auto-deploy).'
             }
+        }
+    }
+
+    post {
+        failure {
+            mail to: 'hibaqku7@gmail.com',
+                 subject: "❌ Jenkins Pipeline Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                 body: """Hello,
+
+The Jenkins pipeline for job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' has failed.
+Check the console output here: ${env.BUILD_URL}
+
+- Jenkins
+"""
         }
     }
 }
